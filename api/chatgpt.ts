@@ -1,0 +1,26 @@
+import { VercelRequest, VercelResponse } from "@vercel/node";
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+module.exports = async (request: VercelRequest, response: VercelResponse) => {
+  try {
+    const { message } =
+      typeof request.body === "string"
+        ? JSON.parse(request.body)
+        : request.body;
+
+    const completion = await client.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: message }],
+    });
+
+    response
+      .status(200)
+      .json({ response: completion.choices[0].message.content });
+  } catch (error: any) {
+    response.status(500).json({ error: error.message });
+  }
+};
