@@ -6,6 +6,8 @@ const client = new OpenAI({
 });
 
 module.exports = async (request: VercelRequest, response: VercelResponse) => {
+  console.log("Incoming message:", JSON.stringify(request.body));
+
   response.setHeader("Access-Control-Allow-Origin", "*");
   response.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   response.setHeader("Access-Control-Allow-Headers", "Content-Type");
