@@ -23,7 +23,7 @@ module.exports = async (request: VercelRequest, response: VercelResponse) => {
         : request.body;
 
     const completion = await client.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4.1,
       messages: [{ role: "user", content: message }],
     });
 
